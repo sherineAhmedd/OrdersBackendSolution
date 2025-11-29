@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
-
+using Orders.API.Middlewares;
 using Orders.BLL.ServiceInterfaces;
 using Orders.BLL.Services;
 using Orders.DAL.Context;
@@ -49,6 +49,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     DbSeeder.SeedData(db);
 }
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure HTTP request pipeline
 if (app.Environment.IsDevelopment())

@@ -19,19 +19,9 @@ namespace Orders.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto dto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var createdOrder = await _orderService.CreateOrderAsync(dto);
-                return CreatedAtAction(nameof(GetOrderById), new { id = createdOrder.OrderId },createdOrder);
-
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            // Model validation handled automatically by [ApiController] as i made data annotation in dto class 
+            var createdOrder = await _orderService.CreateOrderAsync(dto);
+            return CreatedAtAction(nameof(GetOrderById), new { id = createdOrder.OrderId }, createdOrder);
         }
         // GET all orders
         [HttpGet]
