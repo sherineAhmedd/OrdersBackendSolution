@@ -31,6 +31,8 @@ namespace Orders.API.Controllers
             return Ok(orders);
         }
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(OrderReadDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOrderById(Guid id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
@@ -42,6 +44,8 @@ namespace Orders.API.Controllers
             return Ok(order);
         }
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteOrder(Guid id)
         {
             var orderDeleted = await _orderService.DeleteOrderAsync(id);

@@ -15,6 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Connect to Redis 
+var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
+// "redis:6379" 
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+    ConnectionMultiplexer.Connect(redisConnectionString + ",abortConnect=false"));
 builder.Services.AddControllers();
 
 // Swagger configuration
@@ -28,10 +34,7 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 });
-// Connect to Redis 
-builder.Services.AddSingleton<IConnectionMultiplexer>(
-    ConnectionMultiplexer.Connect("localhost:6379")
-);
+
 
 // Register Redis cache service
 builder.Services.AddScoped<ICacheService, RedisCacheService>();
