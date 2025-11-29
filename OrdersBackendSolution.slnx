@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Project Path="Orders.API/Orders.API.csproj" />
+  <Project Path="Orders.BLL/Orders.BLL.csproj" />
+  <Project Path="Orders.DAL/Orders.DAL.csproj" />
+</Solution>
