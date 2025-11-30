@@ -6,7 +6,6 @@ namespace Orders.API.Middlewares
 {
     public class ExceptionMiddleware
     {
-
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
@@ -47,15 +46,19 @@ namespace Orders.API.Middlewares
 
             _logger.LogError(ex, "An exception occurred while processing {Method} {Path}",
                            context.Request.Method, context.Request.Path);
+
             context.Response.StatusCode = statusCode;
+
             var response = new
             {
                 statusCode,
                 message
             };
 
-            var json = JsonSerializer.Serialize(response);
-            await context.Response.WriteAsync(json);
+            // Use WriteAsJsonAsync for proper Swagger response
+            await context.Response.WriteAsJsonAsync(response);
+            await context.Response.CompleteAsync(); // optional, ensures response ends
         }
+
     }
 }

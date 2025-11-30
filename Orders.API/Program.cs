@@ -52,6 +52,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     DbSeeder.SeedData(db);
 }
+
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure HTTP request pipeline

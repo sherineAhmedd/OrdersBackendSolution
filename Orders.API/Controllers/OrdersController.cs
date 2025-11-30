@@ -32,15 +32,10 @@ namespace Orders.API.Controllers
         }
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(OrderReadDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOrderById(Guid id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
-            if(order == null)
-            {
-                return NotFound();
-            }
-
             return Ok(order);
         }
         [HttpDelete("{id}")]
